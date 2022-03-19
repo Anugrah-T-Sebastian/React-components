@@ -14,6 +14,13 @@ function App() {
     setValue((value - 1 + data.length) % data.length)
   }
 
+  useEffect(() => {
+    let slider = setInterval(() => {
+      nextBtn();
+    }, 3000);
+    return () => clearInterval(slider)    //Do not forget the cleanu function!!
+  }, [value])
+
   return (
     <section className='section'>
       <div className='title'>
