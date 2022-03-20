@@ -17,7 +17,7 @@ function App() {
   useEffect(() => {
     let slider = setInterval(() => {
       nextBtn();
-    }, 3000);
+    }, 5000);
     return () => clearInterval(slider)    //Do not forget the cleanu function!!
   }, [value])
 
