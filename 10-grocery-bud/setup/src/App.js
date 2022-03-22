@@ -3,7 +3,7 @@ import List from './List'
 import Alert from './Alert'
 
 function App() {
-  return <h2>grocery bud setup</h2>
+  return <h2>grocery bud setup added</h2>
 }
 
 export default App
