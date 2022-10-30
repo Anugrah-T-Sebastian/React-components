@@ -45,7 +45,23 @@ const reducer = (state, action) => {
         total = parseFloat(total.toFixed(2));
         return { ...state, total, amount };
     }
-    return state;
+    if (action.type === 'TOGGLE_AMOUNT') {
+        let tempCart = state.cart.map((cartItem) => {
+            if (cartItem.id === action.payload.id) {
+                if (action.payload.type === 'INC') {
+                    return { ...cartItem, amount: cartItem.amount + 1 };
+                }
+                if (action.payload.type === 'DEC') {
+                    return { ...cartItem, amount: cartItem.amount - 1 };
+                }
+            }
+            return cartItem;
+        }).filter((cartItem) => cartItem.amount !== 0);     //Using filter, so if value is less than 0, then item is removed from the cart
+
+        return { ...state, cart: tempCart }
+    }
+    throw new Error('No matching action type');
+    // return state;
 }
 
 export default reducer;
