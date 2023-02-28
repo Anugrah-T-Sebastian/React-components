@@ -1,5 +1,3 @@
-1:59
-//import AnswerBlock from "./AnswerBlock";
 const QuestionBlock = ({
   question,
   chosenAnswerItems,
@@ -9,16 +7,21 @@ const QuestionBlock = ({
   quizItemId,
 }) => {
   const handleClick = () => {
-    setChosenAnswerItems((prevState) => [...prevState, question.text]);
+    setChosenAnswerItems((prevState) => [...prevState, question?.text]);
     setUnansweredQuestionIds(
       unansweredQuestionIds.filter((id) => id != quizItemId)
     );
   };
+
+  const validPick =
+    !chosenAnswerItems?.includes(question?.text) &&
+    !unansweredQuestionIds?.includes(quizItemId);
+
   return (
     <button
       className="question-block"
       onClick={handleClick}
-      //disabled={!chosenAnswerItems.includes(question.text)}
+      disabled={validPick}
     >
       <img src={question.image} alt={question.alt} />
       <h3>{question.text}</h3>

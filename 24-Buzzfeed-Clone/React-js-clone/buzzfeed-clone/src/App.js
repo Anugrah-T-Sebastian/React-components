@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import Title from "./components/Title";
 import QuestionsBlock from "./components/QuestionsBlock";
+import AnswerBlock from "./components/AnswerBlock";
 
 const App = () => {
   // STATES
   const [quiz, setQuiz] = useState(null);
   const [chosenAnswerItems, setChosenAnswerItems] = useState([]);
-  const [unansweredQuestionIds, setUnansweredQuestionIds] = useState([]);
+  const [unansweredQuestionIds, setUnansweredQuestionIds] = useState(null);
+  const [showAnswer, setShowAnswer] = useState(false);
   // EFFECTS
   useEffect(() => {
     fetchData();
@@ -15,6 +17,21 @@ const App = () => {
     const unansweredIds = quiz?.content.map(({ id }) => id);
     setUnansweredQuestionIds(unansweredIds);
   }, [quiz]);
+
+  useEffect(() => {
+    if (unansweredQuestionIds) {
+      if (unansweredQuestionIds.length <= 0 && chosenAnswerItems.length >= 1) {
+        //scroll to answer block
+        setShowAnswer(true);
+        const answerBlock = document.getElementById("answer-block");
+        answerBlock?.scrollIntoView({ behavior: "smooth" });
+      }
+      //scroll to highest unansweredQuestionIds
+      const highestId = Math.min(...unansweredQuestionIds);
+      const highestElement = document.getElementById(highestId);
+      highestElement?.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [unansweredQuestionIds, chosenAnswerItems, showAnswer]);
   // FUNCTIONS
   const fetchData = async () => {
     try {
@@ -43,6 +60,12 @@ const App = () => {
             />
           );
         })}
+      {showAnswer && (
+        <AnswerBlock
+          answerOptions={quiz?.answer}
+          chosenAnswers={chosenAnswerItems}
+        />
+      )}
     </div>
   );
 };

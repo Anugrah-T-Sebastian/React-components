@@ -1,13 +1,25 @@
-const AnswerBlock = ({ answer }) => {
+import { useState, useEffect } from "react";
+
+const AnswerBlock = ({ answerOptions, chosenAnswers }) => {
+  const [result, setResult] = useState(null);
+
+  useEffect(() => {
+    answerOptions.forEach((answer) => {
+      if (
+        chosenAnswers.includes(answer.combination[0]) &&
+        chosenAnswers.includes(answer.combination[1]) &&
+        chosenAnswers.includes(answer.combination[2])
+      )
+        setResult(answer);
+      else if (!result) {
+        setResult(answerOptions[0]);
+      }
+    });
+  });
   return (
-    <div className="answer-block">
-      <img src={answer.image} alt={answer.alt} />
-      <h3>{answer.text}</h3>
-      <p>
-        <a>{answer.credit}</a>
-        {" to "}
-        <a href="https://unsplash.com/">Unsplash</a>
-      </p>
+    <div id="answer-block" className="answer-block">
+      <h2>{result?.text}</h2>
+      <img src={result?.image} alt={result?.text} />
     </div>
   );
 };
