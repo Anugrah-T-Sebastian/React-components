@@ -1,14 +1,18 @@
+import { forwardRef } from "react";
 import QuestionBlock from "./QuestionBlock";
-const QuestionsBlock = ({
-  quizItem,
-  chosenAnswerItems,
-  setChosenAnswerItems,
-  unansweredQuestionIds,
-  setUnansweredQuestionIds,
-}) => {
+const QuestionsBlock = (
+  {
+    quizItem,
+    chosenAnswerItems,
+    setChosenAnswerItems,
+    unansweredQuestionIds,
+    setUnansweredQuestionIds,
+  },
+  ref
+) => {
   return (
     <div>
-      <h2 id={quizItem.id} className="question-title">
+      <h2 ref={ref} id={quizItem.id} className="question-title">
         {quizItem.text}
       </h2>
       <div className="questions-container">
@@ -33,4 +37,4 @@ const QuestionsBlock = ({
   );
 };
 
-export default QuestionsBlock;
+export default forwardRef(QuestionsBlock);

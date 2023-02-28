@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, forwardRef } from "react";
 
-const AnswerBlock = ({ answerOptions, chosenAnswers }) => {
+const AnswerBlock = ({ answerOptions, chosenAnswers }, ref) => {
   const [result, setResult] = useState(null);
 
+  //EFFECTS
   useEffect(() => {
     answerOptions.forEach((answer) => {
       if (
@@ -16,12 +17,13 @@ const AnswerBlock = ({ answerOptions, chosenAnswers }) => {
       }
     });
   });
+
   return (
-    <div id="answer-block" className="answer-block">
+    <div ref={ref} id="answer-block" className="answer-block">
       <h2>{result?.text}</h2>
       <img src={result?.image} alt={result?.text} />
     </div>
   );
 };
 
-export default AnswerBlock;
+export default forwardRef(AnswerBlock);
